@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Calc</title>
+    <link rel="stylesheet" href="calc.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+</head>
+<body>
+
+    <div class="calculator">
+        <form class="calculator__form" id="calculator">
+            <!-- Группа: организационно правовая форма и режим налогообложения -->
+            <div class="calculator__separator">
+                <div class="separator-line"></div>
+                <div class="separator-text">
+                    <span>Oрганизационно правовая форма и режим налогообложения</span>
+                </div>
+            </div>
+
+            <div class="calculator__fields-group">
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="organization-legal-form">Организационно правовая форма</label>
+                    <select class="calculator__field" type="number" id="organization-legal-form" name="organization-legal-form">
+                        <option class="default-select-case" value="0" selected="true" disabled="true">Ничего не выбрано</option>
+                        <option value="1">ООО</option>
+                        <option value="2">ИП</option>
+                        <option value="3">Некоммерческая организация</option>
+                    </select>
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="rus-employees-count">Количество работников граждан России</label>
+                    <input class="calculator__field" min="0" id="rus-employees-count" name="rus-employees-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="foreign-employees-count">Количество работников иностранных граждан</label>
+                    <input class="calculator__field" id="foreign-employees-count" min="0" name="foreign-employees-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="tax-system">Режим налогообложения</label>
+                    <select class="calculator__field" type="number" id="tax-system" name="tax-system">
+                        <option value="0" selected="true" disabled="true">Ничего не выбрано</option>
+                        <option value="1">ОСНО</option>
+                        <option value="2">УСН Доходы (6%)</option>
+                        <option value="3">УСН Доходы-расходы (15%)</option>
+                    </select>
+                </div>
+                
+                <!-- ЕНВД -->
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="envd-usage">Применение ЕНВД</label>
+
+                    <label class="checkbox-label" for="envd-usage">Нет</label>
+                    <input type="hidden" name="envd-usage" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="envd-usage" name="envd-usage">
+                </div>
+
+                <div class="calculator__wrapper envd-usage hidden">
+                    <label class="calculator__label" for="envd-points-count">Количество точек ЕНВД</label>
+                    <input class="calculator__field" id="envd-points-count" min="0" name="envd-points-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper envd-usage hidden">
+                    <label class="calculator__label" for="background-envd-usage">Ведётся ли деятельность в рамках фонового режима налогообложения</label>
+
+                    <label class="checkbox-label" for="background-envd-usage">Нет</label>
+                    <input type="hidden" name="background-envd-usage" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="background-envd-usage" name="background-envd-usage">
+                </div>
+            </div>
+
+
+
+            <div class="calculator__fields-group">
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label">Вид деятельности относится к производству, строительству, общепиту</label>
+                    <label class="checkbox-label" for="special-activities">Нет</label>
+                    <input type="hidden" name="special-activities" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="special-activities" name="special-activities">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label">Наличие внешнеэкономической деятельности</label>
+
+                    <label class="checkbox-label" for="foreign-economic-activities">Нет</label>
+                    <input type="hidden" name="foreign-economic-activities" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="foreign-economic-activities" name="foreign-economic-activities">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="several-activities">Наличие нескольких видов деятельности</label>
+
+                    <label class="checkbox-label" for="several-activities">Нет</label>
+                    <input type="hidden" name="several-activities" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="several-activities" name="several-activities">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="reporting-losses">Представление отчётности с убытками (в т.ч. з/пл без выручки)</label>
+
+                    <label class="checkbox-label" for="reporting-losses">Нет</label>
+                    <input type="hidden" name="reporting-losses" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="reporting-losses" name="reporting-losses">
+                </div>
+
+
+                <!-- Группа: наличие обособленных подразделений -->
+                <div class="calculator__separator half">
+                    <div class="separator-line"></div>
+                    <div class="separator-text">
+                        <span>Наличие обособленных подразделений</span>
+                    </div>
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="separate-subdivision">Количество филиалов или обособленных подразделения</label>
+                    <input class="calculator__field" id="separate-subdivision" min="0" name="separate-subdivision" value="0">
+                </div>
+            </div>
+
+
+
+            <!-- Группа: ведение операций по банку -->
+            <div class="calculator__fields-group">
+                <div class="calculator__separator">
+                    <div class="separator-line"></div>
+                    <div class="separator-text">
+                        <span>Ведение операций по банку</span>
+                    </div>
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="monthly-turnover">Примерный ежемесячный оборот (рубли)</label>
+                    <input class="calculator__field" id="monthly-turnover" min="0" name="monthly-turnover" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="bank-client">Ведение «БАНК-КЛИЕНТ»</label>
+                    <select class="calculator__field" id="bank-client" name="bank-client" value="">
+                        <option value="0" selected="true" disabled="true">Ничего не выбрано</option>
+                        <option value="1">силами Заказчика</option>
+                        <option value="2">силами Исполнителя</option>
+                    </select>
+                </div>
+
+
+                <!-- Силами Исполнителя -->
+                <div class="calculator__wrapper banking-by-contractor hidden">
+                    <label class="calculator__label" for="rub-account-count">Количество рублевых счетов</label>
+                    <input class="calculator__field" id="rub-account-count" min="0" name="rub-account-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper banking-by-contractor hidden">
+                    <label class="calculator__label" for="account-actions">Количество операций по рублевому счёту за месяц</label>
+                    <input class="calculator__field" id="account-actions" min="0" name="account-actions" value="0">
+                </div>
+
+                <div class="calculator__wrapper banking-by-contractor hidden">
+                    <label class="calculator__label" for="payments-count">Количество платежек по рублевому счёту за месяц</label>
+                    <input class="calculator__field" id="payments-count" min="0" name="payments-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper banking-by-contractor hidden">
+                    <label class="calculator__label" for="rub-account-turnover">Оборот по рублёвому счёту за месяц в рублях</label>
+                    <input class="calculator__field" id="rub-account-turnover" min="0" name="rub-account-turnover" value="0">
+                </div>
+
+                <div class="calculator__wrapper banking-by-contractor hidden">
+                    <label class="calculator__label" for="foreign-account-count">Количество валютных счетов</label>
+                    <input class="calculator__field" id="foreign-account-count" min="0" name="foreign-account-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper banking-by-contractor hidden">
+                    <label class="calculator__label" for="foreign-account-actions">Количество операций по валютному счёту за месяц</label>
+                    <input class="calculator__field" id="foreign-account-actions" min="0" name="foreign-account-actions" value="0">
+                </div>
+
+                <div class="calculator__wrapper banking-by-contractor hidden">
+                    <label class="calculator__label" for="foreign-account-payments">Количество валютных платежей за месяц</label>
+                    <input class="calculator__field" id="foreign-account-payments" min="0" name="foreign-account-payments" value="0">
+                </div>
+
+                <div class="calculator__wrapper banking-by-contractor hidden">
+                    <label class="calculator__label" for="foreign-account-turnover">Оборот по валютному счёту за месяц (в пересчёте на рубли)</label>
+                    <input class="calculator__field" id="foreign-account-turnover" min="0" name="foreign-account-turnover" value="0">
+                </div>
+
+
+                <!-- Силами Заказчика -->
+                <div class="calculator__wrapper banking-by-customer hidden">
+                    <label class="calculator__label" for="bank-actions-count">
+                        <span>Количество операций по банку за месяц</span>
+                        <span class="helper">i
+                            <span class="helper-text">проведение выписок в программе 1С</span>
+                        </span>                        
+                    </label>
+                    <input class="calculator__field" id="bank-actions-count" min="0" name="bank-actions-count" value="0">
+                </div>
+            </div>
+
+
+            <!-- Группа: кассовый аппарат и банковский терминал -->
+            <div class="calculator__fields-group">
+                <div class="calculator__separator">
+                    <div class="separator-line"></div>
+                    <div class="separator-text">
+                        <span>Кассовый аппарат и банковский терминал</span>
+                    </div>
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label">Ведение главной книги и отчётов кассира</label>
+                    <label class="checkbox-label" for="main-cash-book">Нет</label>
+                    <input type="hidden" name="main-cash-book" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="main-cash-book" name="main-cash-book">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="cash-register-count">Количество кассовых аппаратов</label>
+                    <input class="calculator__field" id="cash-register-count" min="0" name="cash-register-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="cash-book-count">
+                        <span>Ведение кассовой книги и отчётов кассира обособленного подразделения</span>
+                        <span class="helper">i
+                            <span class="helper-text">количество обособленных подразделений</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="cash-book-count" min="0" name="cash-book-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="cash-terminal-count">
+                        <span>Ведение кассовой книги и отчётов кассира обособленного подразделения</span>
+                        <span class="helper">i
+                            <span class="helper-text">количество обособленных подразделений</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="cash-terminal-count" min="0" name="cash-terminal-count" value="0">
+                </div>
+            </div>
+
+            <!-- Группа: курьерские услуги -->
+            <div class="calculator__fields-group">
+                <div class="calculator__separator">
+                    <div class="separator-line"></div>
+                    <div class="separator-text">
+                        <span>Курьерские услуги</span>
+                    </div>
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="reports-on-paper">
+                        <span>Сдача отчётности в бумажном виде</span>
+                        <span class="helper">i
+                            <span class="helper-text">не применяется электронная система отчётности</span>
+                        </span>
+                    </label>
+
+                    <label class="checkbox-label" for="reports-on-paper">Нет</label>
+                    <input type="hidden" name="reports-on-paper" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="reports-on-paper" name="reports-on-paper">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="courier-tours-count">
+                        <span>Курьерские услуги в пределах СПб</span>
+                        <span class="helper">i
+                            <span class="helper-text">количество поездок за месяц</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="courier-tours-count" min="0" name="courier-tours-count" value="0">
+                </div>               
+            </div>
+            
+            <!-- Группа: использование облачного сервиса ЭКСПЕРТ -->
+            <div class="calculator__fields-group">
+                <div class="calculator__separator">
+                    <div class="separator-line"></div>
+                    <div class="separator-text">
+                        <span>Использование облачного сервиса ЭКСПЕРТ</span>
+                    </div>
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="server-accounts-count">
+                        <span>Использование нашего сервера</span>
+                        <span class="helper">i
+                            <span class="helper-text">Количество рабочих мест на сервере, обеспечивающих работу с 1С с любого личного компьютера</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="server-accounts-count" min="0" name="server-accounts-count" value="0">
+                </div>
+            </div>
+
+            
+
+            <!-- Группа: анализ налогов -->
+            <div class="calculator__fields-group">
+                <div class="calculator__separator">
+                    <div class="separator-line"></div>
+                    <div class="separator-text">
+                        <span>Анализ налогов</span>
+                    </div>
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="need-tax-analysis">   <span>Необходимость в предварительном анализе налогов</span>
+                        <span class="helper">i
+                            <span class="helper-text">Ежемесячный налоговый отчёт</span>
+                        </span>
+                    </label>
+
+                    <label class="checkbox-label" for="need-tax-analysis">Нет</label>
+                    <input type="hidden" name="need-tax-analysis" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="need-tax-analysis" name="need-tax-analysis">
+                </div>
+
+                <!-- Группа: обработка документов -->
+                <div class="calculator__separator">
+                    <div class="separator-line"></div>
+                    <div class="separator-text">
+                        <span>Обработка документов</span>
+                    </div>
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="document-count">Количество документов представляемых Заказчиком в бумажном виде и по электронной почте</label>
+                    <input class="calculator__field" id="document-count" min="0" name="document-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper documents-in-1c hidden">
+                    <label class="calculator__label" for="documents-in-1c">Документы введённые в базу 1С самостоятельно</label>
+                    <input class="calculator__field" id="documents-in-1c" min="0" name="documents-in-1c" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="documents-by-contractor">Документы сформированные Исполнителем</label>
+                    <input class="calculator__field" id="documents-by-contractor" min="0" name="documents-by-contractor" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="waybill-count">Учёт ГСМ. Количество путевых листов</label>
+                    <input class="calculator__field" id="waybill-count" min="0" name="waybill-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="mission-count">Оформление командировок (количество)</label>
+                    <input class="calculator__field" id="mission-count" min="0" name="mission-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="urgency-document-preparation">
+                        <span>Срочность в подготовке документов</span>
+                        <span class="helper">i
+                            <span class="helper-text">Подготовка отчетности, в случае нарушения сроков представления документов Заказчиком, либо по требованию Заказчика</span>
+                        </span>
+                    </label>
+
+                    <label class="checkbox-label" for="urgency-document-preparation">Нет</label>
+                    <input type="hidden" name="urgency-document-preparation" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="urgency-document-preparation" name="urgency-document-preparation">
+                </div>
+            </div>
+
+            <!-- Группа: начисление заработной платы -->
+            <div class="calculator__fields-group">
+                <div class="calculator__separator">
+                    <div class="separator-line"></div>
+                    <div class="separator-text">
+                        <span>Начисление заработной платы</span>
+                    </div>
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="salary-count">
+                        <span>Начисление заработной платы гражданам РФ</span>
+                        <span class="helper">i
+                            <span class="helper-text">Количество сотрудников, граждан РФ</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="salary-count" min="0" name="salary-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="foreign-salary-count">
+                        <span>Начисление заработной платы иностранным гражданам</span>
+                        <span class="helper">i
+                            <span class="helper-text">Количество сотрудников, иностранных граждан</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="foreign-salary-count" min="0" name="foreign-salary-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="decree-count">
+                        <span>Начисление декретных</span>
+                        <span class="helper">i
+                            <span class="helper-text">Количество сотрудников в декрете</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="decree-count" min="0" name="decree-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="sick-list-count">
+                        <span>Начисление больничных</span>
+                        <span class="helper">i
+                            <span class="helper-text">Количество больничных листов за месяц</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="sick-list-count" min="0" name="sick-list-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="hourly-wage">Повременная оплата труда, начисление заработной плате по системе, отличающейся от оклада</label>
+
+                    <label class="checkbox-label" for="hourly-wage">Нет</label>
+                    <input type="hidden" name="hourly-wage" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="hourly-wage" name="hourly-wage">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="tax-inspections-count">
+                        <span>Начисление НДФЛ в разные налоговые при наличии обособленных подразделений</span>
+                        <span class="helper">i
+                            <span class="helper-text">Количество налоговых, в которых зарегистрированы обособленные подразделения</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="tax-inspections-count" min="0" name="tax-inspections-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="wage-twice-month">Выплата заработной платы 2 раза в месяц</label>
+
+                    <label class="checkbox-label" for="wage-twice-month">Нет</label>
+                    <input type="hidden" name="wage-twice-month" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="wage-twice-month" name="wage-twice-month">
+                </div>
+            </div>
+
+
+            <!-- Группа: учёт имущества, дополнительные налоги и отчёты -->
+            <div class="calculator__separator">
+                <div class="separator-line"></div>
+                <div class="separator-text">
+                    <span>Учёт имущества, дополнительные налоги и отчёты</span>
+                </div>
+            </div>
+
+            <div class="calculator__fields-group">
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="refund-amount">
+                        <span>Возмещение НДС в рублях</span>
+                        <span class="helper">i
+                            <span class="helper-text">Сумма к возмещению из бюджета</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="refund-amount" min="0" name="refund-amount" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="ks2-ks3-count">
+                        <span>Подготовка комплекта КС2, КС3, заполненные одной строкой</span>
+                        <span class="helper">i
+                            <span class="helper-text">Количество комплектов</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="ks2-ks3-count" min="0" name="ks2-ks3-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="nds-agent-report">Отчётность НДС, как агента</label>
+
+                    <label class="checkbox-label" for="nds-agent-report">Нет</label>
+                    <input type="hidden" name="nds-agent-report" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="nds-agent-report" name="nds-agent-report">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="main-assets-count">
+                        <span>Учет основных средств</span>
+                        <span class="helper">i
+                            <span class="helper-text">Количество ОС</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="main-assets-count" min="0" name="main-assets-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="pap-reports-count">Отчетность в РАР, за каждую накладную (1 накладная = 5 строк)</label>
+                    <input class="calculator__field" id="pap-reports-count" min="0" name="pap-reports-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="reporting-forms">
+                        <span>Статистика ежемесячная (НКО, ЧОУДО и т.д.), количество форм отчётности</span>
+                        <span class="helper">i
+                            <span class="helper-text">Для некоммерческих организаций может быть установлены дополнительные отчёты в Росстат</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="reporting-forms" min="0" name="reporting-forms" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="reporting-kvartal">
+                        <span>Статистика ежеквартальная, количество форм отчётности</span>
+                        <span class="helper">i
+                            <span class="helper-text">Обычно, один отчёт</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="reporting-kvartal" min="0" name="reporting-kvartal" value="0">
+                </div>
+            </div>
+
+            <div class="calculator__fields-group">
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="reporting-year">
+                        <span>Статистика ежегодная, количество форм отчётности</span>
+                        <span class="helper">i
+                            <span class="helper-text">Обычно, один отчёт</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="reporting-year" min="0" name="reporting-year" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="transport-tax">Транспортный налог + авансовые платежи</label>
+
+                    <label class="checkbox-label" for="transport-tax">Нет</label>
+                    <input type="hidden" name="transport-tax" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="transport-tax" name="transport-tax">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="land-tax">Земельный налог + авансовые платежи</label>
+
+                    <label class="checkbox-label" for="land-tax">Нет</label>
+                    <input type="hidden" name="land-tax" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="land-tax" name="land-tax">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="property-tax">
+                        <span>Налог на имущество</span>
+                        <span class="helper">i
+                            <span class="helper-text">Количество объектов облагаемых налогом на имущество</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="property-tax" min="0" name="property-tax" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="mineral-mining-tax">Налог на добычу полезных ископаемых</label>
+
+                    <label class="checkbox-label" for="mineral-mining-tax">Нет</label>
+                    <input type="hidden" name="mineral-mining-tax" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="mineral-mining-tax" name="mineral-mining-tax">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="audit-docs-count">Подготовка документов для встречной проверки, кол-во документов</label>
+                    <input class="calculator__field" id="audit-docs-count" min="0" name="audit-docs-count" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="tax-inspection-letters">
+                        <span>Письма в ИФНС, банк</span>
+                        <span class="helper">i
+                            <span class="helper-text">количество документов</span>
+                        </span>
+                    </label>
+                    <input class="calculator__field" id="tax-inspection-letters" min="0" name="tax-inspection-letters" value="0">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="year-moj-report">
+                        <span>Годовая отчетность в Минюст</span>
+                        <span class="helper">i
+                            <span class="helper-text">представляют некоммерческие организации</span>
+                        </span>
+                    </label>
+
+                    <label class="checkbox-label" for="year-moj-report">Нет</label>
+                    <input type="hidden" name="year-moj-report" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="year-moj-report" name="year-moj-report">
+                </div>
+            </div>
+
+
+            <!-- Группа: операции с прибылью и капиталом -->
+            <div class="calculator__fields-group">
+                <div class="calculator__separator">
+                    <div class="separator-line"></div>
+                    <div class="separator-text">
+                        <span>Операции с прибылью и капиталом</span>
+                    </div>
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="dividends">Отражение в бухгалтерском учете операция по начислению и выплате дивидендов</label>
+
+                    <label class="checkbox-label" for="dividends">Нет</label>
+                    <input type="hidden" name="dividends" value="0">
+                    <input type="checkbox" class="calculator__field" value="1" id="dividends" name="dividends">
+                </div>
+
+                <div class="calculator__wrapper">
+                    <label class="calculator__label" for="dividends-beneficiary">Количество участников общества, которым производится начисление дивидендов</label>
+                    <input class="calculator__field" id="dividends-beneficiary" min="0" name="dividends-beneficiary" value="0">
+                </div>                    
+            </div>
+
+            <div class="total-box">
+                <div class="calculator__wrapper">
+                    <label class="calculator__label">Итого:</label>
+                    <input class="calculator__field form-total" id="form-total" min="0" name="form-total" value="0" disabled="">
+                </div>
+
+                <div class="calculator__controls">
+                    <button id="btn-reset" class="calculator__reset 
+                    calculator__button" type="reset">Сбросить</button>
+                    <input id="btn-submit" class="calculator__button disabled" type="submit" value="Отправить">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="result"></div>
+
+
+<div class="calculator">
+    <form class="form-contacts" method="GET" action="">
+        <input type="text" placeholder="Ваше имя*" name="name" required="">
+        <input type="email" placeholder="E-mail*" name="email" required="">
+        <input class="calculator__button" type="submit" value="Получить консультацию">
+    </form>
+</div>
+
+
+<script
+src="http://code.jquery.com/jquery-3.3.1.min.js"
+integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
+<script
+src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+crossorigin="anonymous"></script>
+<script src="calc.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3d tour icon</title>
+	<style>
+	body {
+		background: #b1bd8c;
+		background: url(http://mytekas.com/UserFiles/17/iys/360-virtual-tours-1.jpg) center no-repeat;
+		-webkit-background-size: cover;
+		background-size: cover;
+	}
+	
+
+	.view3d,
+	.view3d__start,
+	.label__background { background: #2aacff; }
+
+	.view3d {
+		display: block;
+		position: relative;
+		height: 85px;
+		width: 180px;
+		font-family: sans-serif;
+		cursor: pointer;
+		opacity: 0.5;
+		transition: 0.3s;
+	}
+	.view3d:hover {
+		transition: 0.4s;
+		opacity: 1;
+	}
+	.view3d__line,
+	.view3d__start,
+	.label__deg,
+	.label__text,
+	.label__background {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	.view3d__line {
+		width: 150px;
+		height: 160px;
+		border: 7px solid white;
+		border-radius: 50%;
+		transform: rotate3d(1, 0, 0, 73deg) translateX(-50%);
+		top: -40px;
+		z-index: 1;
+	}
+	
+	.view3d__end {
+		display: inline-block;
+		position: relative;
+		width: 0;
+		height: 0;
+		border: 15px solid transparent;
+		border-left-color: white;
+		border-right: 0;
+		border-top-width: 7px;
+		border-bottom-width: 7px;
+		top: 63px;
+		left: 95px;
+		transform: rotate(-5deg);
+		z-index: 4;
+	}
+	.view3d__start {
+		width: 40px;
+		height: 15px;
+		bottom: 5px;
+		z-index: 1;
+		transform: skewX(20deg) translateX(-50%);
+		left: 118px;
+	}
+	.label__deg, .label__text {
+		display: inline-block;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		color: white;
+	}
+	.label__deg {
+		font-size: 32px;
+		z-index: 5;
+		top: 5px;
+		left: 53%;
+		font-weight: bold;
+		letter-spacing: 2px;
+	}
+	.label__text {
+		width: 100%;
+		text-align: center;
+		font-size: 16px;
+		z-index: 5;
+		top: 38px;
+	}
+	.label__background {
+		height: 20px;
+		width: 110px;
+		top: 15px;
+		z-index: 4;
+	}
+</style>
+</head>
+<body>
+	
+	<a class="view3d" href="https://my.matterport.com/show/?m=bir6igiRjJP">
+		<div class="view3d__line"></div>
+		<div class="view3d__end"></div>
+		<div class="view3d__start"></div>
+		<div class="label">
+			<div class="label__deg">360&deg;</div>
+			<div class="label__text">виртуальный тур</div>
+			<div class="label__background"></div>
+		</div>
+	</a>
+
+</body>
+</html>
