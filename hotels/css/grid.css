@@ -59,8 +59,8 @@
 .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
 	position: relative;
 	min-height: 1px;
-	padding-left: 0px;
-	padding-right: 0px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 .clearfix {
 	content:'';
@@ -199,6 +199,9 @@
 
 @media (min-width: 740px) and (max-width: 959px)  {
 	/*.container { max-width: 740px; }*/
+	.container {
+		width: 580px;
+	}
 
 	.col-sm-1 { width: 8.33333%; }
 	.col-sm-2 { width: 16.66667%; }
