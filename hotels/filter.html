@@ -461,20 +461,20 @@
 
                     var i = 0;
 
-                    if(childrenAgeFieldsActive.lenth < childrenCount) {
-                        console.log(childrenAgeFieldsActive.lenth);
+                    // if(childrenAgeFieldsActive.lenth < childrenCount) {
+                        // console.log(childrenAgeFieldsActive.lenth);
                         
                         childrenAgeFields.each(function() {
                             if (i<childrenCount) {
-                                jQuery(this).classAdd("field-child-age-active").fadeIn(300);
+                                jQuery(this).fadeIn(300);
                                 i++;
                             }
                         })
-                    } else {
-                        jQuery(childrenAgeFields.get().reverse()).each(function(){
-                            jQuery(this).fadeOut(300);
-                        });
-                    }
+                    // } else {
+                        // jQuery(childrenAgeFields.get().reverse()).each(function(){
+                            // jQuery(this).fadeOut(300);
+                        // });
+                    // }
 
                     
                 }
