@@ -218,7 +218,7 @@
                                 <label class="field__title">Количество дней</label>
 
                                 <div class="input-group">
-                                    <input type="number" min="3" name="days-count" class="form-input" placeholder="Количество дней" id="days-count" value="3">
+                                    <input type="number" min="2" name="days-count" class="form-input" placeholder="Количество дней" id="days-count" value="2">
                                 </div>
                             </div>
                         </div>
@@ -569,7 +569,7 @@
             /** Обработка поля "количество дней" */
             daysCount.on('change', function() {
                 var $this = $(this);
-                if ($this.val()<3) $this.val(3);
+                if ($this.val()<2) $this.val(2);
                 // количество дней путевки из поля дней
                 var $days = Number(jQuery(this).val());
                 // указанный старт или текущая дата
