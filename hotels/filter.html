@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>filter</title>
-    <link rel="stylesheet" href="css/style.css">
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
     <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" href="css/grid.css">
     <link rel='stylesheet' href='css/fonts/flaticon.css'>
     <style>
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
         body {
             background: #a4a4a4;
         }
@@ -140,13 +145,13 @@
             text-transform: none;
             border: 1px solid #78c317;
             height: 50px;
-            font-size: 18px;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
+            font-size: 18px;            
         }
         .field-child-age {
             display: none;
+        }
+        .show-field {
+            display: inline-block;            
         }
     </style>
 </head>
@@ -411,78 +416,73 @@
         /**
          * Внимание! Локализация датапикера прописана прямо в jQuery-UI.js
          */ 
-         jQuery(document).ready(function(){
-            // инициализация календарей чекина и чекаута
-            var checkOutDate = jQuery('#check-out-date');
-            var checkInDate = jQuery('#check-in-date');
-            var childrenCountField = jQuery('#children');
-            
-            checkInDate.datepicker({
-                defaultDate: 0,
-                minDate: 0,
-                dateFormat:'dd-mm.yy',
-                onSelect: function() {
-                    console.log('open DP 2');
-                    // $(this).val(format(new Date(), 'dd.mm.yy'));
-                    checkOutDate.datepicker("show");
-                }
-            });
+         function checkOutDateInit()
+         {
+            var checkOutDate = jQuery('input#check-out-date');
 
             checkOutDate.datepicker({
                 defaultDate: 3,
                 minDate: 3,
                 numberOfMonths: 2,
-                gotoCurrent: true
+                dateFormat:'dd-mm.yy'
             });
-            // checkInDate.val(format(new Date(), 'dd.mm.yy'));
-            
-            function getCurrentDate() {
-                var currDate = new Date();
-                // console.log(currDate.format('dd.mm.yy'));
-                // return currDate.format('dd.mm.yy');
-            }
-            
-            getCurrentDate();
-            // функция записи даты в инпут
-            // Начальная инициализация дат
-            // var currDate = new Date();
-            // console.log(currDate.format('DD-MM-YYYY'));
-            // jQuery('#check-in-date').val(jQuery(document).format.date(new Date(), "dd/mm/yy"));
-            // jQuery('#check-out-date').val(jQuery(document).format.date(new Date(), "dd/mm/yy"));
+            return false;
+         }
 
+         function checkInDateInit()
+         {
+            var checkInDate = jQuery('input#check-in-date');
 
-            childrenCountField.on('change', function() {
+            checkInDate.datepicker({
+                defaultDate: 0,
+                minDate: 0,
+                numberOfMonths: 2,
+                dateFormat:'dd-mm.yy',
+                onSelect: function() {                    
+                    jQuery('#check-out-date').datepicker("show");
+                }
+            });
+            return false;
+         }
+
+         jQuery(document).ready(function(){
+            // инициализация календарей чекина и чекаута
+            checkOutDateInit();
+            checkInDateInit();
+            
+            /** Появление полей "возраст ребенка" */
+            jQuery('#children').on('change', function() {
                 var $this = jQuery(this);
                 var childrenCount = $this.val();
                 
                 if (childrenCount) {
                     var childrenAgeFields = jQuery(".field-child-age");
-                    var childrenAgeFieldsActive = jQuery(".field-child-age-active");
-
                     var i = 0;
 
-                    // if(childrenAgeFieldsActive.lenth < childrenCount) {
-                        // console.log(childrenAgeFieldsActive.lenth);
-                        
-                        childrenAgeFields.each(function() {
-                            if (i<childrenCount) {
-                                jQuery(this).fadeIn(300);
-                                i++;
-                            }
-                        })
-                    // } else {
-                        // jQuery(childrenAgeFields.get().reverse()).each(function(){
-                            // jQuery(this).fadeOut(300);
-                        // });
-                    // }
-
-                    
+                    childrenAgeFields.each(function() {
+                        var $select = jQuery(this);
+                        if (i<childrenCount) {
+                            $select.addClass('show-field');
+                            i++;
+                        } else {
+                            $select.removeClass('show-field')
+                            .find('select').prop('selectedIndex', 0);
+                        }
+                    })
                 }
             });
 
-        });
+            /** Обработка поля "количество дней" */
+            jQuery('#days-count').on('change', function() {
+                var $days = jQuery(this).val();
+                var $newDate = (jQuery('input#check-in-date')>0) ? jQuery('input#check-in-date') : new Date();
 
-         dateFormat: "dd/mm/yy"
+                console.log($newDate);
+
+                jQuery('input#check-out-date').datepicker( "setDate", $newDate + $days);
+            });
+
+        });
      </script>
  </body>
  </html>
