@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>filter</title>
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
     <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" href="css/grid.css">
     <link rel='stylesheet' href='css/fonts/flaticon.css'>
@@ -41,13 +41,27 @@
             background-color: #f3f3f3;
         }
         .hotels-filter {
-            padding: 25px 45px 30px 45px;
+            padding: 25px 45px 30px;
             background: #fff;
             box-shadow: 0px 20px 60px -8px rgba(0, 0, 0, .1);
             margin-top: 50px;
             position: relative;
             z-index: 100;
         }
+        @media (min-width: 740px) and (max-width: 959px)  {
+            .hotels-filter {
+                padding: 25px 25px 30px;
+            }
+        }
+        @media (min-width: 320px) and (max-width: 739px) {
+            .hotels-filter {
+                padding: 25px 15px 30px;
+            }
+        }
+
+
+
+
         .field__title {
             position: relative;
             width: 100%;
@@ -57,7 +71,7 @@
             padding-left: 5px;
         }
         .field {
-            /*width: 100%;*/
+            position: relative;            
             margin-bottom: 30px;
             float: left;
         }
@@ -74,6 +88,16 @@
         }
         .field-controls {
             float: right;
+        }
+        @media (min-width: 740px) and (max-width: 959px)  {
+            .field-controls {
+                /*float: none;*/
+            }
+        }
+        @media (min-width: 320px) and (max-width: 739px) {
+            .field-controls {
+                /*float: none;*/
+            }
         }
         .input-group {
             width: 100%;
@@ -101,6 +125,18 @@
             border-right: thin solid #e8e8e8;
             background-color: #ededed;
         }
+        @media (min-width: 740px) and (max-width: 959px)  {
+            .input-group-icon {
+                font-size: 12px;
+            }
+        }
+        @media (min-width: 320px) and (max-width: 739px) {
+            .input-group-icon {
+                display: none;
+            }
+        }
+
+
         .input-group-icon i {
             color: #78c317;
             margin-right: 5px;
@@ -117,13 +153,22 @@
         .form-input::-moz-placeholder { font-size: 14px; font-style: italic; }
         .form-input:-ms-input-placeholder { font-size: 14px; font-style: italic; }
         .form-input:-moz-placeholder { font-size: 14px; font-style: italic; }
+        @media (min-width: 740px) and (max-width: 959px)  {
+            /*.form-input::-webkit-input-placeholder { font-size: 12px; font-style: italic; }
+            .form-input::-moz-placeholder { font-size: 12px; font-style: italic; }
+            .form-input:-ms-input-placeholder { font-size: 12px; font-style: italic; }
+            .form-input:-moz-placeholder { font-size: 12px; font-style: italic; }*/
+        }
+        @media (min-width: 320px) and (max-width: 739px) {
+            /*.form-input::-webkit-input-placeholder { font-size: 10px; font-style: italic; }
+            .form-input::-moz-placeholder { font-size: 10px; font-style: italic; }
+            .form-input:-ms-input-placeholder { font-size: 10px; font-style: italic; }
+            .form-input:-moz-placeholder { font-size: 10px; font-style: italic; }*/
+        }
 
         .ui-datepicker {
             margin-top: 10px;
         }
-
-
-
         .btn {
             display: block;
             width: 100%;
@@ -153,302 +198,373 @@
         .show-field {
             display: inline-block;            
         }
-    </style>
-</head>
-<body>
+        input.hasDatepicker {
+            position: relative;
+            
+        }
+        /*.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all {
+            /*position: relative;    */
+            /*left: 0px !important;        */
+            /*left: 30% !important;*/
+            /*transform: translateX(100%) !important;*/
+        /*}
+        @media (min-width: 740px) and (max-width: 959px)  {
+            .ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all {
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+            }
+        }
+        @media (min-width: 320px) and (max-width: 739px) {
+            .ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all:first-of-type{
+                left: 0 !important;
+                transform: translateX(-70%) !important;
+            }
+            #check-out-date{
+                left: 0 !important;
+                top: 100px !important;
+                transform: translateX(-70%) !important;
+            }
+            }*/
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <form action="" class="hotels-filter">
-                    <div class="row">
-                        <div class="col-lg-12 col-sm-12 field">
-                            <div class="field-group">
-                                <label class="field__title">Куда (место / название отеля)</label>
+        </style>
+    </head>
+    <body>
 
-                                <div class="input-group">
-                                    <span class="input-group-icon"><i class="flaticon-placeholder-filled-point" aria-hidden="true"></i> Место</span>
-                                    <input type="text" name="filter_place" class="form-input" placeholder="Введите название места, куда вы хотите" value="" id="filter_place">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form action="" class="hotels-filter">
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 field">
+                                <div class="field-group">
+                                    <label class="field__title">Куда (место / название отеля)</label>
+
+                                    <div class="input-group">
+                                        <span class="input-group-icon"><i class="flaticon-placeholder-filled-point" aria-hidden="true"></i> Место</span>
+                                        <input type="text" name="filter_place" class="form-input" placeholder="Введите название места, куда вы хотите" value="" id="filter_place">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6 col-xs-6 field">
+                                <div class="field-group">
+                                    <label class="field__title">Дата заезда</label>
+
+                                    <div class="input-group">
+                                        <span class="input-group-icon"><i class="flaticon-calendar-2"></i>Дата заезда</span>
+
+                                        <input type="text" name="check-in-date" class="form-input" id="check-in-date" placeholder="дд.мм.гггг">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6 col-xs-6 field">
+                                <div class="field-group">
+                                    <label class="field__title">Дата выезда</label>
+
+                                    <div class="input-group">
+                                        <span class="input-group-icon"><i class="flaticon-calendar-2"></i>Дата выезда</span>
+                                        <input type="text" name="check-out-date" class="form-input" value="" id="check-out-date" placeholder="дд.мм.гггг">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-12 col-xs-12 field">
+                                <div class="field-group">
+                                    <label class="field__title">Количество дней</label>
+
+                                    <div class="input-group">
+                                        <input type="number" min="2" name="days-count" class="form-input" placeholder="Количество дней" id="days-count" value="2">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-sm-6 col-xs-6 field">
+                                <div class="field-group">
+                                    <label class="field__title">Взрослые</label>
+
+                                    <div class="input-group">
+                                        <select type="text" name="adults" class="form-input" placeholder="Количество дней" id="adults">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-sm-6 col-xs-6 field">
+                                <div class="field-group">
+                                    <label class="field__title">Дети</label>
+
+                                    <div class="input-group">
+                                        <select type="text" name="children" class="form-input" placeholder="Количество дней" id="children">
+                                            <option value="0" selected>Без детей</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-sm-6 col-xs-6 field field-child-age">
+                                <div class="field-group">
+                                    <label class="field__title">Возраст ребенка</label>
+
+                                    <div class="input-group">
+                                        <select name="child-1-age" id="child-1-age" class="form-input">
+                                            <option value="-1" selected disabled>Возраст ребенка (лет)</option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-sm-6 col-xs-6 field field-child-age">
+                                <div class="field-group">
+                                    <label class="field__title">&nbsp;</label>
+
+                                    <div class="input-group">
+                                        <select name="child-2-age" id="child-2-age" class="form-input">
+                                            <option value="-1" selected disabled>Возраст ребенка (лет)</option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-sm-6 col-xs-6 field field-child-age">
+                                <div class="field-group">
+                                    <label class="field__title">&nbsp;</label>
+
+                                    <div class="input-group">
+                                        <select name="child-3-age" id="child-3-age" class="form-input">
+                                            <option value="-1" selected disabled>Возраст ребенка (лет)</option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-sm-6 col-xs-6 field field-child-age">
+                                <div class="field-group">
+                                    <label class="field__title">&nbsp;</label>
+
+                                    <div class="input-group">
+                                        <select name="child-4-age" id="child-4-age" class="form-input">
+                                            <option value="-1" selected disabled>Возраст ребенка (лет)</option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-sm-6 col-xs-6 field field-child-age">
+                                <div class="field-group">
+                                    <label class="field__title">&nbsp;</label>
+
+                                    <div class="input-group">
+                                        <select name="child-5-age" id="child-5-age" class="form-input">
+                                            <option value="-1" selected disabled>Возраст ребенка (лет)</option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2 field field-controls">
+                                <div class="field-group">
+                                    <label class="field__title">&nbsp;</label>
+                                    <button class="btn btn-submit">
+                                        <i class="flaticon-magnifying-glass"></i> Поиск
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-lg-4 col-sm-12 field">
-                            <div class="field-group">
-                                <label class="field__title">Дата заезда</label>
-
-                                <div class="input-group">
-                                    <span class="input-group-icon"><i class="flaticon-calendar-2"></i>Дата заезда</span>
-                                    
-                                    <input type="text" name="check-in-date" class="form-input" id="check-in-date" placeholder="дд.мм.гггг">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-sm-12 field">
-                            <div class="field-group">
-                                <label class="field__title">Дата выезда</label>
-
-                                <div class="input-group">
-                                    <span class="input-group-icon"><i class="flaticon-calendar-2"></i>Дата выезда</span>
-                                    <input type="text" name="check-out-date" class="form-input" value="" id="check-out-date" placeholder="дд.мм.гггг">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 field">
-                            <div class="field-group">
-                                <label class="field__title">Количество дней</label>
-
-                                <div class="input-group">
-                                    <input type="text" name="days-count" class="form-input" placeholder="Количество дней" id="days-count">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-sm-12 field">
-                            <div class="field-group">
-                                <label class="field__title">Взрослые</label>
-
-                                <div class="input-group">
-                                    <select type="text" name="adults" class="form-input" placeholder="Количество дней" id="adults">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-sm-12 field">
-                            <div class="field-group">
-                                <label class="field__title">Дети</label>
-
-                                <div class="input-group">
-                                    <select type="text" name="children" class="form-input" placeholder="Количество дней" id="children">
-                                        <option value="0" selected>Без детей</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-sm-12 field field-child-age">
-                            <div class="field-group">
-                                <label class="field__title">Возраст ребенка (лет)</label>
-
-                                <div class="input-group">
-                                    <select name="child-1-age" id="child-1-age" class="form-input">
-                                        <option value="-1" selected disabled>Возраст ребенка (лет)</option>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-sm-12 field field-child-age">
-                            <div class="field-group">
-                                <label class="field__title">&nbsp;</label>
-
-                                <div class="input-group">
-                                    <select name="child-2-age" id="child-2-age" class="form-input">
-                                        <option value="-1" selected disabled>Возраст ребенка (лет)</option>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-sm-12 field field-child-age">
-                            <div class="field-group">
-                                <label class="field__title">&nbsp;</label>
-
-                                <div class="input-group">
-                                    <select name="child-3-age" id="child-3-age" class="form-input">
-                                        <option value="-1" selected disabled>Возраст ребенка (лет)</option>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-sm-12 field field-child-age">
-                            <div class="field-group">
-                                <label class="field__title">&nbsp;</label>
-
-                                <div class="input-group">
-                                    <select name="child-4-age" id="child-4-age" class="form-input">
-                                        <option value="-1" selected disabled>Возраст ребенка (лет)</option>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-sm-12 field field-child-age">
-                            <div class="field-group">
-                                <label class="field__title">&nbsp;</label>
-
-                                <div class="input-group">
-                                    <select name="child-5-age" id="child-5-age" class="form-input">
-                                        <option value="-1" selected disabled>Возраст ребенка (лет)</option>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-sm-12 field field-controls">
-                            <div class="field-group">
-                                <label class="field__title">&nbsp;</label>
-                                <button class="btn btn-submit">
-                                    <i class="flaticon-magnifying-glass"></i> Поиск
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div class="col-lg-8 col-sm-12 col-sm-12"></div>
             </div>
-            <div class="col-lg-8 col-sm-12 col-sm-12"></div>
         </div>
-    </div>
 
 
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
-    <script>
-        /**
-         * Внимание! Локализация датапикера прописана прямо в jQuery-UI.js
-         */ 
-         function checkOutDateInit()
-         {
-            var checkOutDate = jQuery('input#check-out-date');
-
-            checkOutDate.datepicker({
-                defaultDate: 3,
-                minDate: 3,
-                numberOfMonths: 2,
-                dateFormat:'dd-mm.yy'
-            });
-            return false;
-         }
-
-         function checkInDateInit()
-         {
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+        <script src="js/moment-with-locales.js"></script>
+        <!-- <script src="js/moment.js"></script> -->
+        <script>
             var checkInDate = jQuery('input#check-in-date');
+            var checkOutDate = jQuery('input#check-out-date');
+            var filterPlace = jQuery('#filter_place');
+            var daysCount = jQuery('#days-count');
 
-            checkInDate.datepicker({
-                defaultDate: 0,
-                minDate: 0,
-                numberOfMonths: 2,
-                dateFormat:'dd-mm.yy',
-                onSelect: function() {                    
-                    jQuery('#check-out-date').datepicker("show");
+            /** Внимание! Локализация датапикера прописана прямо в jQuery-UI.js */ 
+
+            /** инициализация календаря чекаута */
+            function checkOutDateInit()
+            {
+                checkOutDate.datepicker({
+                    defaultDate: 3,
+                    minDate: 3,
+                    numberOfMonths: getMontCount(),
+                    dateFormat:'dd.mm.yy',
+                    onSelect: function() {
+                    // выбор во втором датапикере должен автоматически рассчитать 
+                    // количество дней путевки по датам
+                    setTimeout(function() {
+                        jQuery('#days-count').val(fillDaysCountField());
+                    }, 0);
                 }
             });
-            return false;
-         }
+                return false;
+            }
 
-         jQuery(document).ready(function(){
+            function getMontCount() {
+                var month = 2;            
+                if (jQuery(window).width() < 740) { month = 1; }
+                return month;
+            }
+
+            /** инициализация календаря чекина */
+            function checkInDateInit()
+            {
+                checkInDate.datepicker({
+                    defaultDate: 0,
+                    minDate: 0,
+                    numberOfMonths: getMontCount(),
+                    dateFormat:'dd.mm.yy',
+                    onSelect: function() {
+                        setTimeout(function(){
+                        // выводим второй датапикер только если в нем ничего не выбрали
+                        if(checkOutDate.datepicker("getDate") == null) {
+                            checkOutDate.datepicker("show");
+                        }
+                    },0);
+                    }
+                });
+                return false;
+            }
+
+            /** рассчитывает количество дней путевки через календари */
+            function fillDaysCountField() {
+            
+            // дата начала путевки - сложный код, чтобы прописать дату в инпута
+            var $start;
+            if (checkInDate.val() != "") {
+                $start = moment(checkInDate.val(), 'DD.MM.YYYY').locale('ru');
+            } else { 
+                $start = moment().locale('ru');
+                checkInDate.val($start.format("L"));
+            }
+            
+            // дата окончания путевки
+            var $end = (checkOutDate.val() != "") ? moment(checkOutDate.val(), 'DD.MM.YYYY').locale('ru') : moment().locale('ru');
+            console.log(checkInDate.val() + '---' + checkOutDate.val());
+            console.log($start + '---' + $end);
+            // рассчитываем количество дней по календарям
+            return Number(moment($end.diff($start)).locale('ru').format("D"));             
+        }
+
+        jQuery(document).ready(function(){
             // инициализация календарей чекина и чекаута
             checkOutDateInit();
             checkInDateInit();
+
             
             /** Появление полей "возраст ребенка" */
             jQuery('#children').on('change', function() {
@@ -473,16 +589,39 @@
             });
 
             /** Обработка поля "количество дней" */
-            jQuery('#days-count').on('change', function() {
-                var $days = jQuery(this).val();
-                var $newDate = (jQuery('input#check-in-date')>0) ? jQuery('input#check-in-date') : new Date();
-
-                console.log($newDate);
-
-                jQuery('input#check-out-date').datepicker( "setDate", $newDate + $days);
+            daysCount.on('change', function() {
+                var $this = $(this);
+                if ($this.val()<3) $this.val(3);
+                // количество дней путевки из поля дней
+                var $days = Number(jQuery(this).val());
+                // указанный старт или текущая дата
+                var $startDate = (checkInDate.val() !== '') ? moment(checkInDate.val(), 'DD.MM.YYYY').locale('ru') : moment().locale('ru');
+                // рассчетная дата конца путевки
+                var $endDate = $startDate.add($days-1, 'day');
+                // записываем
+                checkOutDate.val($endDate.locale('ru').format('L'));
             });
 
+            
+            /** обработка запроса названия места */
+            filterPlace.autocomplete({
+                source: "data.php",
+                minLength: 3,
+                select: function( event, ui ) {
+                    /* коллбэк при необходимости*/
+                }
+            });
+
+            /** Кнопка отправки формы */
+            jQuery('.hotels-filter').on('submit', function(e) {
+                e.preventDefault();
+
+                $this = jQuery(this);
+                postData = $this.serialize();
+                /* отправка запроса удобным способом */
+                alert('Полетел запрос:\n\n' + postData);
+            });
         });
-     </script>
- </body>
- </html>
+    </script>
+</body>
+</html>
