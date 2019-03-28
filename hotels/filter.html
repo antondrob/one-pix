@@ -218,7 +218,40 @@
                                 <label class="field__title">Количество дней</label>
 
                                 <div class="input-group">
-                                    <input type="number" min="2" name="days-count" class="form-input" placeholder="Количество дней" id="days-count" value="2">
+                                    <input type="number" min="3" name="days-count" class="form-input" placeholder="Количество дней" id="days-count" value="3">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-sm-12 col-xs-12 field">
+                            <div class="field-group">
+                                <label class="field__title">Количество звезд</label>
+
+                                <div class="input-group">
+                                    <span class="input-group-icon"><i class="flaticon-favorite"></i>Количество звезд</span>
+                                    <select type="text" name="hotel-grade" class="form-input" id="hotel-grade">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3"selected>3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>                                        
+                                    </select>                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-sm-12 col-xs-12 field">
+                            <div class="field-group">
+                                <label class="field__title">Питание</label>
+
+                                <div class="input-group">
+                                    <select type="text" name="inclusive" class="form-input" id="inclusive">
+                                        <option value="0" selected disabled>Варианты завтраков</option>
+                                        <option value="1">Все включено</option>
+                                        <option value="2">Ужины</option>
+                                        <option value="3">Обеды</option>
+                                        <option value="4">Завтраки</option>
+                                    </select>                                    
                                 </div>
                             </div>
                         </div>
@@ -228,7 +261,7 @@
                                 <label class="field__title">Взрослые</label>
 
                                 <div class="input-group">
-                                    <select type="text" name="adults" class="form-input" placeholder="Количество дней" id="adults">
+                                    <select type="text" name="adults" class="form-input" id="adults">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -249,7 +282,7 @@
                                 <label class="field__title">Дети</label>
 
                                 <div class="input-group">
-                                    <select type="text" name="children" class="form-input" placeholder="Количество дней" id="children">
+                                    <select type="text" name="children" class="form-input" id="children">
                                         <option value="0" selected>Без детей</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
