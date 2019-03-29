@@ -3,16 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>filter</title>
+    <title>filter search</title>
     <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" href="css/grid.css">
     <link rel='stylesheet' href='css/fonts/flaticon.css'>
+    <link rel="stylesheet" href="js/slick/slick.css">
+    <link rel="stylesheet" href="js/slick/slick-theme.css">
+
+
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+        }
+        body {
+            position: relative;
+            background: #f6f7f9;
+        }
+        .place-head {            
+            padding-top: 200px;            
+        }
+        .place-head .container {
+            position: relative;            
+            background: #fff;
+            padding: 25px 20px;
+            box-shadow: 0px 20px 60px -8px rgba(0, 0, 0, .1);
+        }
+        .dark-layer {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            background: rgba(0,0,0,0.5);
+        }
+        .place-head__background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            /*border-bottom: 10px solid #8bb353;*/
+            background: url(http://hotels.one-pix.ru/wp-content/uploads/2019/03/BeachHouse2BR-_12_-_3_.jpg) center 30% no-repeat;
+            background-size: cover;
+            padding-top: 100px;
+            height: 400px;
+            z-index: -1;
+        }
+        .place__photo {
+            display: inline-block;
+            width: 100%;
+            height: auto;
+        }
+        
+        .up-line {
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: thin solid #78c317;
+        }
+        .bottom-line {
+            margin-top: 30px;
+            font-size: 16px;
+        }
+        .place__name {
+            flex-grow: 70%;
+            display: inline-block;
+            font-size: 36px;
+        }
+        .place__rate {
+            flex-grow: 30%;
+            display: inline-block;
+            font-size: 28px;
+        }
+        .flaticon {
+            color: #78c317;
+            margin-right: 5px;
+        }
+        .place__description .flaticon {
+            font-size: 32px;
+            margin-right: 10px;
+        }
+        .content-text {
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .place__gallery--slide {
+            overflow:hidden;
+            width: 100%;
+            display: inline-block;
+            height: inherit;
+            padding-bottom: 7px;
+            box-sizing: border-box;
+        }
+        .slick-slide.slick-current.slick-active > div {
+            height: inherit;
+        }
+        .place__gallery--slide img {
+            height: 100% !important;
+            width: 100% !important;
+        }
+        .place__gallery .slick-track {
+            height: 360px !important;            
+        }
+
+
+        .place__gallery--nav {
+            /*height: 120px !important;*/
+        }
+        .place__gallery--nav_icon img {
+            height: 100% !important;
+            width: 100% !important;            
+        }
+        .place__gallery--nav .slick-track {
+            height: 120px !important;
+        }
+        .place__gallery--nav_icon {
+            width: 140px !important;
+            height: 110px !important;
+        }
+        .slick-prev {
+            left: 0;
+            z-index: 9;
+        }
+        .slick-next {
+            right: 0;
+            z-index: 9;
+        }
+        .slick-prev, .slick-next {
+            width: 40px;
+            height: 40px;
+        }
+        .slick-prev:before, .slick-next:before {
+            font-size: 32px;
+            opacity: 0.9;
+        }
+        .price {
+            width: 100%;
+            text-align: right;
+        }
+        .price__value, .price__currency {
+            font-size: 32px;
+        }
+        .price__value {
+            margin: 0 10px;
+        }
+        .section_separator {
+            width: 100%;
+            min-height: 10px;
+            background: #8bb353;
+        }
+        .search_result {
+            min-height: 300px;
+        }
+    </style>
 </head>
 <body>
-    
+
+    <div class="place-head">
+        <div class="place-head__background">
+            <div class="dark-layer"></div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="place__gallery">
+                        <div class="place__gallery--slide"><img src="img/01.jpg" alt=""></div>
+                        <div class="place__gallery--slide"><img src="img/02.jpg" alt=""></div>
+                        <div class="place__gallery--slide"><img src="img/03.jpg" alt=""></div>
+                        <div class="place__gallery--slide"><img src="img/01.jpg" alt=""></div>
+                        <div class="place__gallery--slide"><img src="img/02.jpg" alt=""></div>
+                        <div class="place__gallery--slide"><img src="img/03.jpg" alt=""></div>
+                    </div>
+                    <div class="place__gallery--nav">
+                        <div class="place__gallery--nav_icon"><img src="img/01.jpg" alt=""></div>
+                        <div class="place__gallery--nav_icon"><img src="img/02.jpg" alt=""></div>
+                        <div class="place__gallery--nav_icon"><img src="img/03.jpg" alt=""></div>
+                        <div class="place__gallery--nav_icon"><img src="img/01.jpg" alt=""></div>
+                        <div class="place__gallery--nav_icon"><img src="img/02.jpg" alt=""></div>
+                        <div class="place__gallery--nav_icon"><img src="img/03.jpg" alt=""></div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="up-line">
+                        <div class="place__name">Anemoessa Mykonos</div>
+                        <div class="place__rate">
+                            <i class="flaticon flaticon-favorite"></i>
+                            <i class="flaticon flaticon-favorite"></i>
+                            <i class="flaticon flaticon-favorite"></i>
+                            <i class="flaticon flaticon-favorite"></i>
+                            <i class="flaticon flaticon-favorite"></i>
+                        </div>
+                    </div>
+                    <div class="bottom-line">
+                        <div class="place__description">
+                            <p class="content-text"><i class="flaticon flaticon-placeholder-filled-point"></i>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias nostrum ipsam maiores, laborum quasi. Impedit, earum, asperiores? Aut, tempora animi odit expedita delectus eaque ex possimus commodi ut eius debitis suscipit, iusto eos numquam itaque ad doloremque cumque sunt facilis? ipsum dolor sit amet, consectetur adipisicing elit. Ratione ut in, enim tempora quidem eveniet facere obcaecati id at odio?</p>
+
+                            <p class="content-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed error quae magni quam quibusdam enim, repudiandae similique est modi perferendis debitis eos sapiente delectus dolorum, deserunt, dolor, ipsam assumenda voluptates?</p>
+                        </div>
+
+                        <div class="price">
+                            <span class="price__currency">от</span>
+                            <span class="price__value">43 650</span>
+                            <span class="flaticon price__currency">&#8381;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="section_separator"></div> -->
+
+    <div class="search_result">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
-    <script src="js/moment-with-locales.js"></script>
+    <script src="js/moment-with-locales.js"></script>    
+    <script src="js/slick/slick.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.place__gallery').slick({
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              arrows: false,
+              fade: true,
+              asNavFor: '.place__gallery--nav'
+          });
+            $('.place__gallery--nav').slick({
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              arrows: true,
+              asNavFor: '.place__gallery',
+              dots: false,
+              centerMode: true,
+              focusOnSelect: true
+          });
+        })
+    </script>
 </body>
 </html>
