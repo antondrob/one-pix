@@ -471,28 +471,9 @@
             var filterPlace = jQuery('#filter_place');
             var daysCount = jQuery('#days-count');
 
-            /** Внимание! Локализация датапикера прописана прямо в jQuery-UI.js */ 
-
-            /** инициализация календаря чекаута */
-            function checkOutDateInit()
-            {
-                checkOutDate.datepicker({
-                    defaultDate: 3,
-                    minDate: 3,
-                    numberOfMonths: getMontCount(),
-                    dateFormat:'dd.mm.yy',
-                    onSelect: function() {
-                    /* выбор во втором датапикере должен автоматически рассчитать 
-                    количество дней путевки по датам */
-                    setTimeout(function() {
-                        jQuery('#days-count').val(fillDaysCountField());
-                    }, 0);
-                }
-            });
-                return false;
-            }
-
-            function getMontCount() {
+            /** Внимание! Локализация датапикера прописана прямо в jQuery-UI.js */
+            /** определяем сколько месяцев в календаре показывать (адаптивка) */
+            function getMonthCountToShow() {
                 var month = 2;            
                 if (jQuery(window).width() < 740) { month = 1; }
                 return month;
@@ -502,19 +483,65 @@
             function checkInDateInit()
             {
                 checkInDate.datepicker({
-                    defaultDate: 0,
-                    minDate: 0,
-                    numberOfMonths: getMontCount(),
+                    defaultDate: 1,
+                    minDate: 1,
+                    numberOfMonths: getMonthCountToShow(),
                     dateFormat:'dd.mm.yy',
                     onSelect: function() {
+                        /* выбор в датапикере должен автоматически рассчитать количество дней путевки */
+                        setTimeout(function() {
+                            jQuery('#days-count').val(fillDaysCountField());
+                        }, 0);
+
+
+
+
                         setTimeout(function(){
-                            /* выводим второй датапикер только если в нем ничего не выбрали */
-                            if(checkOutDate.datepicker("getDate") == null) {
-                                checkOutDate.datepicker("show");
+                            var $start = moment(checkInDate.val(), 'DD.MM.YYYY').locale('ru');
+                            var $end = (checkOutDate.val() == "") ? moment().locale('ru') : moment(checkOutDate.val(), 'DD.MM.YYYY').locale('ru');
+                            /* разница в днях между началом и концом */
+                            var daysOffset = Number(moment($end.diff($start, "days")));
+                            
+                            /* если начальная дата больше или равна конечной, то меняем конечную на стартовую + 1 день */
+                            if (daysOffset <= 0 ) {
+                                $end = moment($start).locale('ru').add(1,"d");
+                                /* +1 текущий, +1 следующий дни */
+                                daysOffset = 2;
+                                jQuery('#days-count').val(daysOffset);
+                            } else {
+                                jQuery('#days-count').val(fillDaysCountField());
                             }
-                        },0);
+                            /* считаем нвоую минимальную дату для второго календаря */
+                            var minDate = Number(moment($start.diff(moment().locale('ru'), "days"))) + 2;
+                            /* устанавливаем новые свойства */
+                            checkOutDate.datepicker("option", {"minDate": minDate, "defaultDate": daysOffset}).datepicker("show");
+                            checkOutDate.val($end.format('L'));
+                            
+                        }, 0);   
                     }
                 });
+                /* стартовое значение - завтра */
+                jQuery(checkInDate).val( moment().locale('ru').add(1,"d").format('L') );
+                return false;
+            }
+
+            /** инициализация календаря чекаута */
+            function checkOutDateInit()
+            {
+                checkOutDate.datepicker({
+                    defaultDate: 2,
+                    minDate: 2,
+                    numberOfMonths: getMonthCountToShow(),
+                    dateFormat:'dd.mm.yy',
+                    onSelect: function() {
+                        /* выбор в датапикере должен автоматически рассчитать количество дней путевки */
+                        setTimeout(function() {
+                            jQuery('#days-count').val(fillDaysCountField());
+                        }, 0);
+                    }
+                });
+                /* стартовое значение - послезавтра */
+                jQuery(checkOutDate).val( moment().locale('ru').add(2,"d").format('L') );                
                 return false;
             }
 
@@ -530,12 +557,10 @@
                 checkInDate.val($start.format("L"));
             }
             
-            // дата окончания путевки
-            var $end = (checkOutDate.val() != "") ? moment(checkOutDate.val(), 'DD.MM.YYYY').locale('ru') : moment().locale('ru');
-            console.log(checkInDate.val() + '---' + checkOutDate.val());
-            console.log($start + '---' + $end);
+            /* дата окончания путевки */
+            var $end = (checkOutDate.val() != "") ? moment(checkOutDate.val(), 'DD.MM.YYYY').locale('ru') : moment($start + 1).locale('ru');
             // рассчитываем количество дней по календарям
-            return Number(moment($end.diff($start)).locale('ru').format("D"));             
+            return Number(moment($end.diff($start, "days"))) + 1;
         }
 
         
